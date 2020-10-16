@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { FormEvent, useState } from 'react';
+import { useRoute } from '@react-navigation/native';
 import {
   ScrollView,
   View,
@@ -11,7 +12,36 @@ import {
 import { Feather } from '@expo/vector-icons';
 import { RectButton } from 'react-native-gesture-handler';
 
+import api from '../../services/api';
+
+interface OrphanageDataRouteParams {
+  position: {
+    latitude: number;
+    longitude: number;
+  };
+}
+
 export default function OrphanageData() {
+  const route = useRoute();
+
+  const params = route.params as OrphanageDataRouteParams;
+
+  const [name, setName] = useState('');
+  const [about, setAbout] = useState('');
+  const [instructions, setInstructions] = useState('');
+  const [opening_hours, setOpeningHours] = useState('');
+  const [open_on_weekends, setOpenOnWeekends] = useState(true);
+
+  function handleCreateOprhanage() {
+    ;
+
+    const { latitude, longitude } = params.position;
+
+    const data = new FormData();
+
+    data.append('name', name);
+  }
+
   return (
     <ScrollView
       style={styles.container}
@@ -20,13 +50,22 @@ export default function OrphanageData() {
       <Text style={styles.title}>Dados</Text>
 
       <Text style={styles.label}>Nome</Text>
-      <TextInput style={styles.input} />
+      <TextInput
+        value={name}
+        onChangeText={(text) => setName(text)}
+        style={styles.input}
+      />
 
       <Text style={styles.label}>Sobre</Text>
-      <TextInput style={[styles.input, { height: 110 }]} multiline />
+      <TextInput
+        value={about}
+        onChangeText={(text) => setAbout(text)}
+        style={[styles.input, { height: 110 }]}
+        multiline
+      />
 
-      <Text style={styles.label}>Whatsapp</Text>
-      <TextInput style={styles.input} />
+      {/* <Text style={styles.label}>Whatsapp</Text>
+      <TextInput style={styles.input} /> */}
 
       <Text style={styles.label}>Fotos</Text>
       <TouchableOpacity style={styles.imagesInput} onPress={() => {}}>
@@ -36,20 +75,33 @@ export default function OrphanageData() {
       <Text style={styles.title}>Visitação</Text>
 
       <Text style={styles.label}>Instruções</Text>
-      <TextInput style={[styles.input, { height: 110 }]} multiline />
+      <TextInput
+        value={instructions}
+        onChangeText={(text) => setInstructions(text)}
+        style={[styles.input, { height: 110 }]}
+        multiline
+      />
 
       <Text style={styles.label}>Horario de visitas</Text>
-      <TextInput style={styles.input} />
+      <TextInput
+        value={opening_hours}
+        onChangeText={(text) => setOpeningHours(text)}
+        style={styles.input}
+      />
 
       <View style={styles.switchContainer}>
         <Text style={styles.label}>Atende final de semana?</Text>
         <Switch
           thumbColor="#fff"
           trackColor={{ false: '#ccc', true: '#39CC83' }}
+          value={open_on_weekends}
+          onValueChange={() => {
+            setOpenOnWeekends(!open_on_weekends);
+          }}
         />
       </View>
 
-      <RectButton style={styles.nextButton} onPress={() => {}}>
+      <RectButton style={styles.nextButton} onPress={handleCreateOprhanage}>
         <Text style={styles.nextButtonText}>Cadastrar</Text>
       </RectButton>
     </ScrollView>

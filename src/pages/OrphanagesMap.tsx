@@ -29,7 +29,7 @@ export default function OrphanagesMap() {
   }, []);
 
   function handleNavigateToOrphanageDetails(id: number) {
-    navigation.navigate(`OrphanageDetails/${id}`);
+    navigation.navigate('OrphanageDetails', { id });
   }
 
   function handleNavigateToCreateOprhanage() {
@@ -74,7 +74,9 @@ export default function OrphanagesMap() {
       </MapView>
 
       <View style={styles.footer}>
-        <Text style={styles.footerText}> 2 orfanatos encontrados</Text>
+        <Text style={styles.footerText}>
+          {orphanages.length} orfanatos encontrados
+        </Text>
 
         <RectButton
           style={styles.createOrphanageButton}
