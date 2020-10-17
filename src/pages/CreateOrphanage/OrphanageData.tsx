@@ -15,6 +15,7 @@ import { RectButton } from 'react-native-gesture-handler';
 import * as ImagePicker from 'expo-image-picker';
 
 import api from '../../services/api';
+import { set } from 'react-native-reanimated';
 
 interface OrphanageDataRouteParams {
   position: {
@@ -33,6 +34,7 @@ export default function OrphanageData() {
   const [about, setAbout] = useState('');
   const [instructions, setInstructions] = useState('');
   const [opening_hours, setOpeningHours] = useState('');
+  const [whatsapp, setWhatsapp] = useState('');
   const [open_on_weekends, setOpenOnWeekends] = useState(true);
   const [previewImages, setPreviewImages] = useState<string[]>([]);
 
@@ -46,6 +48,7 @@ export default function OrphanageData() {
     data.append('latitude', String(latitude));
     data.append('longitude', String(longitude));
     data.append('instructions', instructions);
+    data.append('whatsapp', whatsapp);
     data.append('opening_hours', opening_hours);
     data.append('open_on_weekends', String(open_on_weekends));
 
@@ -104,8 +107,12 @@ export default function OrphanageData() {
         multiline
       />
 
-      {/* <Text style={styles.label}>Whatsapp</Text>
-      <TextInput style={styles.input} /> */}
+      <Text style={styles.label}>Whatsapp</Text>
+      <TextInput
+        value={whatsapp}
+        onChangeText={(text) => setWhatsapp(text)}
+        style={styles.input}
+      />
 
       <Text style={styles.label}>Fotos</Text>
 

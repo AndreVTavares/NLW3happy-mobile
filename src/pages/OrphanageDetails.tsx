@@ -28,6 +28,7 @@ interface Orphanage {
   longitude: number;
   about: string;
   instructions: string;
+  whatsapp: string;
   opening_hours: string;
   open_on_weekends: boolean;
   images: Array<{
@@ -45,13 +46,22 @@ export default function OrphanageDetails() {
 
   useEffect(() => {
     api.get(`orphanages/${params.id}`).then((response) => {
-      console.log(response.data);
       setOrphanage(response.data);
     });
   }, [params.id]);
 
   function handleOpenGoogleMapRoutes() {
-      Linking.openURL(`https://www.google.com/maps/dir/?api=1&destination=${orphanage?.latitude},${orphanage?.longitude}`)
+    Linking.openURL(
+      `https://www.google.com/maps/dir/?api=1&destination=${orphanage?.latitude},${orphanage?.longitude}`
+    );
+  }
+
+  function handleWhatsappContact() {
+    const contactText = 'Olá gostaria de poder visitar a sua instituição, vamos marcar?';
+
+    Linking.openURL(
+      `whatsapp://send?text=${contactText}&phone=55${orphanage?.whatsapp}`
+    );
   }
 
   if (!orphanage) {
@@ -145,7 +155,10 @@ export default function OrphanageDetails() {
           )}
         </View>
 
-        <RectButton style={styles.contactButton} onPress={() => {}}>
+        <RectButton
+          style={styles.contactButton}
+          onPress={handleWhatsappContact}
+        >
           <FontAwesome name="whatsapp" size={24} color="#FFF" />
           <Text style={styles.contactButtonText}>Entrar em contato</Text>
         </RectButton>
