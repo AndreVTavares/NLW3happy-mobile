@@ -27,13 +27,14 @@ Vá no arquivo `api.ts` dentro de `mobile/src/services`, e no arquivo `backend/s
 Se precisar instalar o *Expo*, execute o comando `yarn global add expo-cli`.
 Em seguida, execute o projeto
 
+```
 cd mobile
 npm install
 npm run start
 ```
 
 Se estiver usando Yarn, utilize
-```bash
+```
 cd mobile
 yarn install
 yarn start
